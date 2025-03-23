@@ -1,0 +1,265 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Trang Chủ{% endblock %}
+
+{% block content %}
+<!-- Content -->
+<link rel="stylesheet" href="/static/css/homepage.css">
+<div class="content">
+    <!-- Phim Mới Section -->
+    <section class="movie-section">
+        <h2>PHIM MỚI</h2>
+        <div class="movie-carousel">
+            <button class="carousel-btn prev-btn">❮</button>
+            <div class="carousel">
+                <!-- [Thay đổi: Bọc mỗi .movie-item trong thẻ <a> và thêm play-button] -->
+                <a href="/movie/new/1" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/2" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/3" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/4" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/5" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/6" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/7" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/8" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/9" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                <a href="/movie/new/10" class="movie-item">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+            </div>
+            <button class="carousel-btn next-btn">❯</button>
+        </div>
+    </section>
+
+    <!-- Thể Loại Section -->
+    <section class="genre-section">
+        <h2>THỂ LOẠI</h2>
+        <div class="genre-list">
+            <button class="genre-btn">phim hành động</button>
+            <button class="genre-btn">phim tình cảm</button>
+            <button class="genre-btn">phim hài hước</button>
+            <button class="genre-btn">phim cổ trang</button>
+            <button class="genre-btn">phim tâm lý</button>
+            <button class="genre-btn">phim võ thuật</button>
+            <button class="genre-btn">phim chiến tranh</button>
+            <button class="genre-btn">phim kinh dị</button>
+            <button class="genre-btn">phim truyền hình</button>
+            <button class="genre-btn">phim anime</button>
+            <button class="genre-btn">phim chiếu rạp</button>
+            <button class="genre-btn">phim viễn tưởng</button>
+            <button class="genre-btn">phim thần thoại</button>
+            <button class="genre-btn">phim phiêu lưu</button>
+            <button class="genre-btn">phim hình sự</button>
+            <button class="genre-btn">phim kinh điển</button>
+            <button class="genre-btn">phim hoạt hình</button>
+            <button class="genre-btn">phim tài liệu</button>
+        </div>
+    </section>
+
+    <!-- Kho Phim Section -->
+    <section class="movie-collection">
+        <h2>KHO PHIM</h2>
+        <div class="movie-grid">
+            <a href="/movie/collection/1" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/2" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/3" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/4" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/5" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/6" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/7" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/8" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/9" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/10" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/11" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/12" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/13" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/14" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/15" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/16" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/17" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <a href="/movie/collection/18" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên Phim</div>
+            </a>
+            <!-- Các thẻ còn lại giữ nguyên cấu trúc này -->
+        </div>
+        <button class="view-all-btn">Xem tất cả</button>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const carousel = document.querySelector('.carousel');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        const items = document.querySelectorAll('.movie-item');
+
+        // Sao chép các phần tử để tạo hiệu ứng cuộn tròn
+        const originalItemsCount = items.length;
+        items.forEach(item => {
+            const clone = item.cloneNode(true);
+            clone.setAttribute('data-clone', 'true');
+            carousel.appendChild(clone);
+        });
+
+        // Tính chiều rộng tối đa của carousel (chỉ tính bản gốc)
+        const maxScroll = originalItemsCount * 220; // 220 là chiều rộng của mỗi .movie-item
+
+        // Cuộn sang trái khi nhấn nút "prev"
+        prevBtn.addEventListener('click', () => {
+            const currentScroll = carousel.scrollLeft;
+
+            if (currentScroll <= 0) {
+                // Khi ở đầu, nhảy đến cuối bản sao
+                carousel.scrollTo({ left: maxScroll, behavior: 'smooth' });
+            } else {
+                carousel.scrollBy({ left: -220, behavior: 'smooth' }); // Cuộn ngược 220px
+            }
+        });
+
+        // Cuộn sang phải khi nhấn nút "next"
+        nextBtn.addEventListener('click', () => {
+            const currentScroll = carousel.scrollLeft;
+
+            if (currentScroll >= maxScroll - 220) { // -220 để tránh sai số
+                // Khi gần đến cuối bản gốc, nhảy về đầu
+                carousel.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                carousel.scrollBy({ left: 220, behavior: 'smooth' }); // Cuộn tiếp 220px
+            }
+        });
+
+        // Điều chỉnh vị trí cuộn để tạo hiệu ứng vô hạn
+        carousel.addEventListener('scroll', () => {
+            const currentScroll = carousel.scrollLeft;
+
+            // Khi cuộn đến cuối bản gốc, nhảy về đầu
+            if (currentScroll >= maxScroll - 220 && !carousel.classList.contains('transitioning')) {
+                carousel.classList.add('transitioning');
+                carousel.scrollTo({ left: 0, behavior: 'auto' });
+                setTimeout(() => {
+                    carousel.classList.remove('transitioning');
+                }, 50); // Đợi một chút để hoàn thành nhảy
+            }
+
+            // Khi cuộn về trước đầu, nhảy về cuối bản sao
+            if (currentScroll <= 0 && !carousel.classList.contains('transitioning')) {
+                carousel.classList.add('transitioning');
+                carousel.scrollTo({ left: maxScroll, behavior: 'auto' });
+                setTimeout(() => {
+                    carousel.classList.remove('transitioning');
+                }, 50);
+            }
+        });
+    });
+</script>
+{% endblock %}
