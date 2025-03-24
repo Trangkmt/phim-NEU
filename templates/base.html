@@ -1,0 +1,242 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHIM NEU - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="/static/images/logo.png" alt="PHIM NEU Logo" class="logo-img"> 
+            </div>
+            <ul class="nav-links">
+                <li><a href="#phim-moi">PHIM MỚI</a></li>
+                <li><a href="#phim-viet">PHIM VIỆT</a></li>
+                <li><a href="#trailer">TRAILER</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" placeholder="Tìm kiếm phim..." class="search-input">
+                <button class="search-button"><img src='/static/images/search-button.png'></button>
+            </div>
+            <!-- [Thay đổi: Thêm khu vực user-info, ẩn mặc định] -->
+            <div class="auth-buttons" id="auth-buttons" {% if session['username'] %}style="display: none;"{% endif %}>
+                <button class="login-btn">Đăng nhập</button>
+                <button class="register-btn">Đăng ký</button>
+            </div>
+            <div class="user-info" id="user-info" {% if session['username'] %}style="display: flex;"{% else %}style="display: none;"{% endif %}>
+                <span class="user-label">USER: <span id="username-display">{{ session['username'] if session['username'] else "Tên User" }}</span></span>
+                <img src="/static/images/avatar_user.png" alt="User Avatar" class="user-avatar">
+                <div class="dropdown">
+                    <button class="dropdown-toggle">▼</button>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Ổ sđ nhỏ</a>
+                        <a href="#" class="dropdown-item">Tài khoản</a>
+                        <a href="#" class="dropdown-item">Danh sách lưu</a>
+                        <a href="#" class="dropdown-item" id="logout-btn">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Modal Đăng nhập -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <!-- [Thay đổi: Thêm form với method="POST"] -->
+            <form id="login-form" method="POST" action="/login">
+                <h2>Tên đăng nhập</h2>
+                <input type="text" name="username" class="modal-input" placeholder="Tên đăng nhập" required>
+                <h2>Mật khẩu</h2>
+                <input type="password" name="password" class="modal-input" placeholder="Mật khẩu" required>
+                <button type="submit" class="modal-btn">Đăng nhập</button>
+                <p class="forgot-password">Bạn chưa có tài khoản?</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Đăng ký -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <!-- [Thay đổi: Thêm form với method="POST"] -->
+            <form id="register-form" method="POST" action="/register">
+                <h2>Tên đăng nhập</h2>
+                <input type="text" name="username" class="modal-input" placeholder="Tên đăng nhập" required>
+                <h2>Mật khẩu</h2>
+                <input type="password" name="password" class="modal-input" placeholder="Mật khẩu" required>
+                <h2>Nhập lại mật khẩu</h2>
+                <input type="password" name="confirm-password" class="modal-input" placeholder="Nhập lại mật khẩu" required>
+                <button type="submit" class="modal-btn">Đăng ký</button>
+                <p class="forgot-password">Bạn đã có tài khoản?</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Nội dung chính (được chèn bởi file kế thừa) -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo">
+                    <img src="/static/images/logo.png">
+                </div>
+                <p>Website xem phim miễn phí<br>Chất lượng cao, không quảng cáo<br>Hỗ trợ đa nền tảng<br>HD 4K dành cho bạn!</p>
+            </div>
+            <div class="footer-links">
+                <h3><a href="/phim-moi">PHIM MỚI</a></h3>
+            </div>
+            <div class="footer-links">
+                <h3><a href="/phim-viet">PHIM VIỆT</a></h3>
+            </div>
+            <div class="footer-links">
+                <h3><a href="/the-loai">THỂ LOẠI</a></h3>
+            </div>
+            <div class="footer-help">
+                <h3>TRỢ GIÚP</h3>
+                <ul>
+                    <li><a href="/tro-giup/ho-tro">Hỗ trợ</a></li>
+                    <li><a href="/tro-giup/lien-he">Liên hệ</a></li>
+                    <li><a href="/tro-giup/dieu-khoan-su-dung">Điều khoản sử dụng</a></li>
+                    <li><a href="/tro-giup/chinh-sach-quyen-rieng-tu">Chính sách quyền riêng tư</a></li>
+                </ul>
+            </div>
+            <div class="footer-donate">
+                <h3>Donate for us</h3>
+                <p>MB Bank: 0823812166</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript cho Modal -->
+    <script>
+        // Lấy các phần tử
+        const loginBtn = document.querySelector('.login-btn');
+        const registerBtn = document.querySelector('.register-btn');
+        const loginModal = document.getElementById('login-modal');
+        const registerModal = document.getElementById('register-modal');
+        const closeButtons = document.getElementsByClassName('close');
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const usernameDisplay = document.getElementById('username-display');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        // Hiển thị modal đăng nhập khi nhấn nút "Đăng nhập"
+        loginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+    
+        // Hiển thị modal đăng ký khi nhấn nút "Đăng ký"
+        registerBtn.addEventListener('click', () => {
+            registerModal.style.display = 'flex';
+        });
+    
+        // Đóng modal khi nhấp vào nút "X"
+        Array.from(closeButtons).forEach(button => {
+            button.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+                registerModal.style.display = 'none';
+            });
+        });
+    
+        
+    
+        // Xử lý form đăng nhập (POST)
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(loginForm);
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                // [Thay đổi: Kiểm tra điều kiện đăng nhập - tạm để trống]
+                if (data.success) { // Giả sử server trả về success: true
+                    // Ẩn nút đăng nhập/đăng ký, hiển thị user-info
+                    authButtons.style.display = 'none';
+                    userInfo.style.display = 'flex';
+                    usernameDisplay.textContent = data.username; // Giả sử server trả về username
+                    loginModal.style.display = 'none';
+                    // [Thay đổi: Gửi yêu cầu GET để lấy thông tin user]
+                    fetchUserInfo();
+                } else {
+                    alert('Đăng nhập thất bại!');
+                }
+            } catch (error) {
+                console.error('Lỗi:', error);
+                alert('Có lỗi xảy ra khi đăng nhập!');
+            }
+        });
+    
+        // Xử lý form đăng ký (POST)
+        registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(registerForm);
+    try {
+        const response = await fetch('/register', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            // Ẩn nút đăng nhập/đăng ký, hiển thị user-info
+            authButtons.style.display = 'none';
+            userInfo.style.display = 'flex';
+            usernameDisplay.textContent = data.username; 
+            registerModal.style.display = 'none';
+
+            // 🔥 Gửi yêu cầu GET để lấy lại thông tin user từ session
+            fetchUserInfo();
+        } else {
+            alert('Đăng ký thất bại!');
+        }
+    } catch (error) {
+        console.error('Lỗi:', error);
+        alert('Có lỗi xảy ra khi đăng ký!');
+    }
+});
+
+    
+        // [Thêm mới: Hàm gửi yêu cầu GET để lấy thông tin user]
+        async function fetchUserInfo() {
+            try {
+                const response = await fetch('/user-info', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                if (data.username) {
+                    usernameDisplay.textContent = data.username;
+                }
+            } catch (error) {
+                console.error('Lỗi khi lấy thông tin user:', error);
+            }
+        }
+    
+        // [Thêm mới: Xử lý đăng xuất]
+        logoutBtn.addEventListener('click', () => {
+            // Ẩn user-info, hiển thị lại nút đăng nhập/đăng ký
+            userInfo.style.display = 'none';
+            authButtons.style.display = 'flex';
+        });
+    </script>
+
+    <!-- JavaScript cho các trang con (nếu cần) -->
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
