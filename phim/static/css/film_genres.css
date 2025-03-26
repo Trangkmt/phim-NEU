@@ -1,0 +1,117 @@
+/* Content Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content {
+    flex: 1 0 auto;
+    width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    color: #fff;
+}
+
+.featured-movie {
+    margin-bottom: 40px;
+}
+
+/* Style cho đoạn text tìm kiếm */
+.film_genres {
+    color: #fff;
+    font-size: 30px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Grid cho danh sách phim bên dưới */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 4 cột như trong ảnh */
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.movie-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+
+.movie-card .placeholder-image {
+    height: 270px; /* Chiều cao nhỏ hơn để phù hợp với layout */
+    width: 100%;
+    border-radius: 10px;
+    background-color: #fff; /* Placeholder màu trắng */
+    transition: opacity 0.3s ease;
+}
+
+
+.movie-card .movie-title {
+    padding: 10px 0 0 0;
+    font-size: 14px;
+    color: #d08000;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: transparent;
+}
+
+.movie-card .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: url('/static/images/play_button.png') no-repeat center center; /* Thay bằng đường dẫn thực tế */
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Hiệu ứng hover */
+.movie-card:hover .placeholder-image {
+    opacity: 0.5;
+}
+
+.movie-card:hover .play-button {
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .featured-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .featured-thumbnail {
+        width: 100%;
+        height: 300px;
+    }
+
+    .featured-details {
+        min-height: auto;
+    }
+
+    .featured-buttons {
+        align-self: stretch;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(3, 1fr); /* Giảm xuống 3 cột trên màn hình nhỏ */
+    }
+
+    .movie-card {
+        height: 220px;
+    }
+
+    .movie-card .placeholder-image {
+        height: 150px;
+    }
+}

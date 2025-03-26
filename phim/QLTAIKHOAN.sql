@@ -1,0 +1,1 @@
+GRANT ALL ON "dbo"."user" TO "kiwi"
