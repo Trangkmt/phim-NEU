@@ -235,6 +235,70 @@
         });
     </script>
 
+        <!-- JavaScript xử lý đăng nhập, đăng ký, đăng xuất -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const loginBtn = document.querySelector('.login-btn');
+                const registerBtn = document.querySelector('.register-btn');
+                const loginModal = document.getElementById('login-modal');
+                const registerModal = document.getElementById('register-modal');
+                const closeButtons = document.querySelectorAll('.close');
+                const logoutBtn = document.getElementById('logout-btn');
+    
+                // Hiển thị modal đăng nhập
+                loginBtn.addEventListener('click', () => {
+                    loginModal.style.display = 'flex';
+                });
+    
+                // Hiển thị modal đăng ký
+                registerBtn.addEventListener('click', () => {
+                    registerModal.style.display = 'flex';
+                });
+    
+                // Đóng modal khi nhấp vào "X"
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        loginModal.style.display = 'none';
+                        registerModal.style.display = 'none';
+                    });
+                });
+    
+                // Xử lý đăng nhập
+                document.getElementById("login-form").addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.target);
+                    const response = await fetch("/login", { method: "POST", body: formData });
+                    const data = await response.json();
+                    if (data.success) {
+                        alert("Đăng nhập thành công!");
+                        window.location.reload();
+                    } else {
+                        alert("Sai tài khoản hoặc mật khẩu!");
+                    }
+                });
+    
+                // Xử lý đăng ký
+                document.getElementById("register-form").addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.target);
+                    const response = await fetch("/register", { method: "POST", body: formData });
+                    const data = await response.json();
+                    if (data.success) {
+                        alert("Đăng ký thành công! Hãy đăng nhập.");
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                });
+    
+                // Xử lý đăng xuất
+                logoutBtn.addEventListener("click", async () => {
+                    await fetch("/logout");
+                    window.location.href = "/";
+                });
+            });
+        </script>
+
     <!-- JavaScript cho các trang con (nếu cần) -->
     {% block scripts %}
     {% endblock %}
