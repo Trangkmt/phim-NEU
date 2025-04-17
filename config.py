@@ -2,7 +2,6 @@ import os
 from datetime import timedelta
 from typing import Dict, Any
 
-
 class Config:
     """Application configuration class with environment variables and defaults."""
 

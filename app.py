@@ -128,4 +128,4 @@ def initialize_database(db_config):
     # Create session factory
     Session = sessionmaker(bind=engine)
     
-    return Session
+    return Session # Create a session instance

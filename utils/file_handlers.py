@@ -14,4 +14,4 @@ def create_static_dirs():
             path.mkdir(parents=True, exist_ok=True)
             logging.info(f"Đã tạo thư mục: {directory}")
         else:
-            logging.debug(f"Thư mục đã tồn tại: {directory}")
+            logging.debug(f"Thư mục đã tồn tại: {directory}") #123

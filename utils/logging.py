@@ -33,5 +33,5 @@ def setup_logging(log_level=logging.INFO, log_file="app.log"):
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
-    logging.info("Logging has been set up.")
+    logging.info("Logging has been set up.") #123
 
