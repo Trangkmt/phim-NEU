@@ -1,4 +1,5 @@
 import os
+from urllib.parse import quote_plus
 from datetime import timedelta
 from typing import Dict, Any
 
@@ -10,13 +11,13 @@ class Config:
         'SESSION_LIFETIME_DAYS': 1,
         'DB_TYPE': 'mssql',  # 'mssql' or 'mysql'
         'DB_DRIVER': '{ODBC Driver 17 for SQL Server}',
-        'DB_SERVER': 'localhost',
-        'DB_NAME': 'QLTAIKHOAN',
+        'DB_SERVER': 'localhost\\SQLEXPRESS',  # Adjusted for your server name
+        'DB_NAME': 'your_database',            # Your database name
         'DB_TRUSTED': 'yes',
-        'DB_USER': '',
-        'DB_PASS': '',
-        'DB_HOST': 'localhost',  # For MySQL
-        'DB_PORT': '3306',       # For MySQL
+        'DB_USER': '',                         # Leave empty for Windows auth
+        'DB_PASS': '',                         # Leave empty for Windows auth
+        'DB_HOST': 'localhost',                # For MySQL
+        'DB_PORT': '3306',                     # For MySQL
         'LOG_FILE': 'app.log',
         'LOG_MAX_BYTES': 10000,
         'LOG_BACKUP_COUNT': 3,
@@ -73,15 +74,11 @@ class Config:
         else:  # Default to MSSQL
             if self.db_config['trusted'].lower() == 'yes':
                 return (
-                    f"mssql+pyodbc:///"
-                    f"?driver={self.db_config['driver']}"
-                    f"&server={self.db_config['server']}"
-                    f"&database={self.db_config['database']}"
-                    "&trusted_connection=yes"
+                    f"mssql+pyodbc://{self.db_config['server']}/{self.db_config['database']}?"
+                    f"driver={quote_plus(self.db_config['driver'])}&trusted_connection=yes"
                 )
             return (
-                f"mssql+pyodbc://{self.db_config['username']}:{self.db_config['password']}@"
-                f"?driver={self.db_config['driver']}"
-                f"&server={self.db_config['server']}"
-                f"&database={self.db_config['database']}"
+                f"mssql+pyodbc://{self.db_config['username']}:{quote_plus(self.db_config['password'])}@"
+                f"{self.db_config['server']}/{self.db_config['database']}?"
+                f"driver={quote_plus(self.db_config['driver'])}"
             )

@@ -1,11 +1,12 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text, Table, MetaData
-# from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
 import datetime
 import logging
 from typing import Dict, Any, Optional
 from sqlalchemy.orm import declarative_base
+import pyodbc
+import urllib.parse
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -124,60 +125,43 @@ class SystemConfig(Base):
     def __repr__(self):
         return f"<SystemConfig {self.key}>"
 
-def initialize_database(db_config: Dict[str, Any]) -> None:
-    """Initialize the database connection and create tables if they don't exist.
-    
-    Args:
-        db_config: Dictionary containing database configuration
-    """
-    global SessionLocal
-    
+def initialize_database(db_config):
+    """Initialize database connection and create tables."""
     try:
-        # Create connection string based on database type
-        if db_config.get('type', 'mssql').lower() == 'mysql':
-            connection_string = (
-                f"mysql+pymysql://{db_config['user']}:{db_config['password']}@"
-                f"{db_config['host']}:{db_config['port']}/{db_config['database']}"
-            )
-        else:  # Default to MSSQL
-            if db_config.get('trusted', 'yes').lower() == 'yes':
-                connection_string = (
-                    f"mssql+pyodbc://{db_config.get('server', 'localhost')}/"
-                    f"{db_config.get('database', 'QLTAIKHOAN')}?"
-                    f"driver={db_config.get('driver', '{ODBC Driver 17 for SQL Server}')}"
-                    "&trusted_connection=yes"
-                )
+        # Use the connection string directly if it's a string
+        if isinstance(db_config, str):
+            connection_string = db_config
+        else:
+            # For dictionary config, format a working connection string
+            odbc_str = f"DRIVER={{SQL Server}};"
+            odbc_str += f"SERVER={db_config.get('server', 'localhost')};"
+            odbc_str += f"DATABASE={db_config.get('database', 'master')};"
+            
+            if db_config.get('username') and db_config.get('password'):
+                odbc_str += f"UID={db_config['username']};PWD={db_config['password']};"
             else:
-                connection_string = (
-                    f"mssql+pyodbc://{db_config.get('username', '')}:{db_config.get('password', '')}"
-                    f"@{db_config.get('server', 'localhost')}/"
-                    f"{db_config.get('database', 'QLTAIKHOAN')}?"
-                    f"driver={db_config.get('driver', '{ODBC Driver 17 for SQL Server}')}"
-                )
+                odbc_str += "Trusted_Connection=yes;"
+            
+            quoted_conn = urllib.parse.quote_plus(odbc_str)
+            connection_string = f"mssql+pyodbc:///?odbc_connect={quoted_conn}"
         
-        # Create engine with connection pooling and timeout settings
+        print(f"Connecting with: {connection_string}")
+        
+        # Create the engine with a timeout
         engine = create_engine(
-            connection_string,
-            echo=False,
-            pool_size=5,
-            max_overflow=10,
-            pool_timeout=30,
-            pool_pre_ping=True  # Test connections before use
+            connection_string, 
+            echo=True,
+            connect_args={'timeout': 30}
         )
         
-        # Configure session factory
-        SessionLocal = sessionmaker(
-            autocommit=False,
-            autoflush=False,
-            bind=engine,
-            expire_on_commit=False  # Better for web applications
-        )
-
-        # Create tables if they don't exist
+        # Create all tables
         Base.metadata.create_all(bind=engine)
         
-        logger.info("Database initialized successfully")
+        # Create session factory
+        Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
         
+        print("Database initialization successful")
+        return Session
     except Exception as e:
-        logger.critical(f"Database initialization failed: {str(e)}", exc_info=True)
+        print(f"Database initialization error: {str(e)}")
         raise

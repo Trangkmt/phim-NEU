@@ -62,47 +62,44 @@ class UserSession(Base):
         return f"<UserSession {self.session_id}>"
 
 def initialize_database(db_config):
-    """Initialize database connection and create tables if they don't exist"""
+    """Initialize SQL Server database connection"""
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
-    import logging
+    
+    # Tạo connection string đúng chuẩn cho SQL Server
+    if db_config.get('trusted', 'yes').lower() == 'yes':
+        # Windows Authentication
+        connection_string = (
+            f"mssql+pyodbc://{db_config['server']}/{db_config['database']}"
+            "?driver=ODBC+Driver+17+for+SQL+Server"
+            "&Trusted_Connection=yes"
+        )
+    else:
+        # SQL Server Authentication
+        connection_string = (
+            f"mssql+pyodbc://{db_config.get('username', '')}:{db_config.get('password', '')}"
+            f"@{db_config['server']}/{db_config['database']}"
+            "?driver=ODBC+Driver+17+for+SQL+Server"
+        )
     
     try:
-        # Create connection string based on config
-        if db_config.get('trusted', 'yes').lower() == 'yes':
-            connection_string = (
-                f"mssql+pyodbc://{db_config.get('server', 'localhost')}/"
-                f"{db_config.get('database', 'QLTAIKHOAN')}?"
-                f"driver={db_config.get('driver', '{ODBC Driver 17 for SQL Server}')}"
-                "&trusted_connection=yes"
-            )
-        else:
-            connection_string = (
-                f"mssql+pyodbc://{db_config.get('username', '')}:{db_config.get('password', '')}"
-                f"@{db_config.get('server', 'localhost')}/"
-                f"{db_config.get('database', 'QLTAIKHOAN')}?"
-                f"driver={db_config.get('driver', '{ODBC Driver 17 for SQL Server}')}"
-            )
-        
-        # Create engine and session factory
         engine = create_engine(
             connection_string,
-            echo=False,
-            pool_size=5,
-            max_overflow=10,
-            pool_timeout=30,
-            pool_pre_ping=True
+            echo=True,  # Hiển thị log SQL (debug)
+            pool_pre_ping=True  # Tự động kiểm tra kết nối
         )
         
-        # Create tables
+        # Kiểm tra kết nối
+        with engine.connect() as test_conn:
+            from sqlalchemy import text
+            test_conn.execute(text("SELECT 1"))
+            print("✅ Kết nối database thành công!")
+        
+        # Tạo bảng
         Base.metadata.create_all(engine)
         
-        # Create session factory
-        Session = sessionmaker(bind=engine)
-        
-        logging.info("Database initialized successfully")
-        return Session
-        
+        return sessionmaker(bind=engine)
+    
     except Exception as e:
-        logging.error(f"Database initialization failed: {str(e)}", exc_info=True)
+        print(f"❌ Lỗi kết nối database: {str(e)}")
         raise

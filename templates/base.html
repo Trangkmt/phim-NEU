@@ -20,10 +20,11 @@
                 <li><a href="#trailer">TRAILER</a></li>
             </ul>
             <div class="search-container">
-                <input type="text" placeholder="Tìm kiếm phim..." class="search-input">
-                <button class="search-button"><img src='/static/images/search-button.png'></button>
+                <form action="/search" method="GET">
+                    <input type="text" name="query" placeholder="Tìm kiếm phim..." class="search-input">
+                    <button type="submit" class="search-button"><img src='/static/images/search-button.png'></button>
+                </form>
             </div>
-            <!-- [Thay đổi: Thêm khu vực user-info, ẩn mặc định] -->
             <div class="auth-buttons" id="auth-buttons" {% if session['username'] %}style="display: none;"{% endif %}>
                 <button class="login-btn">Đăng nhập</button>
                 <button class="register-btn">Đăng ký</button>
@@ -82,7 +83,6 @@
     <div id="register-modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
-            <!-- [Thay đổi: Thêm form với method="POST"] -->
             <form id="register-form" method="POST" action="/register">
                 <h2>Tên đăng nhập</h2>
                 <input type="text" name="username" class="modal-input" placeholder="Tên đăng nhập" required>

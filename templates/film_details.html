@@ -12,19 +12,19 @@
     <section class="featured-movie">
         <div class="featured-container">
             <div class="featured-thumbnail">
-                <div class="placeholder-image"></div>
+                <div class="placeholder-image"{% if movie.poster_path %} style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
             </div>
             <div class="featured-details">
-                <h1 class="movie-title">TÊN PHIM</h1>
-                <p>Thể loại: ....</p>
+                <h1 class="movie-title">{% if movie %}{{ movie.title }}{% else %}TÊN PHIM{% endif %}</h1>
+                <p>Thể loại: {% if movie.genres %}{{ movie.genres }}{% else %}....{% endif %}</p>
                 <div class="featured-buttons">
-                    <button class="watch-now-btn">XEM NGAY ➤</button>
+                    <a href="/watch/{{ movie.id }}"><button class="watch-now-btn">XEM NGAY ➤</button></a>
                     <button class="add-to-list-btn">THÊM VÀO DANH SÁCH +</button>
                 </div>
                 <hr class="separator">
                 <div class="movie-description">
                     <p class="description">Nội dung phim</p>
-                    <p class="description-text">abcd</p>
+                    <p class="description-text">{% if movie.overview %}{{ movie.overview }}{% else %}abcd{% endif %}</p>
                 </div>
             </div>
         </div>
