@@ -1,7 +1,7 @@
 <!-- home.html -->
 {% extends 'base.html' %}
 
-{% block title %}Trang Chủ{% endblock %}
+{% block title %}{% if movie %}{{ movie.title }}{% else %}Chi tiết phim{% endif %}{% endblock %}
 
 {% block content %}
 <!-- Content -->
@@ -12,19 +12,19 @@
     <section class="featured-movie">
         <div class="featured-container">
             <div class="featured-thumbnail">
-                <div class="placeholder-image"{% if movie.poster_path %} style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
+                <div class="placeholder-image"{% if movie and movie.poster_path %} style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
             </div>
             <div class="featured-details">
                 <h1 class="movie-title">{% if movie %}{{ movie.title }}{% else %}TÊN PHIM{% endif %}</h1>
-                <p>Thể loại: {% if movie.genres %}{{ movie.genres }}{% else %}....{% endif %}</p>
+                <p>Thể loại: {% if movie and movie.genres %}{{ movie.genres }}{% else %}....{% endif %}</p>
                 <div class="featured-buttons">
-                    <a href="/watch/{{ movie.id }}"><button class="watch-now-btn">XEM NGAY ➤</button></a>
+                    <a href="{% if movie %}{{ url_for('movies.watch_movie', movie_id=movie.id) }}{% else %}#{% endif %}"><button class="watch-now-btn">XEM NGAY ➤</button></a>
                     <button class="add-to-list-btn">THÊM VÀO DANH SÁCH +</button>
                 </div>
                 <hr class="separator">
                 <div class="movie-description">
                     <p class="description">Nội dung phim</p>
-                    <p class="description-text">{% if movie.overview %}{{ movie.overview }}{% else %}abcd{% endif %}</p>
+                    <p class="description-text">{% if movie and movie.overview %}{{ movie.overview }}{% else %}Chưa có mô tả chi tiết{% endif %}</p>
                 </div>
             </div>
         </div>
@@ -34,44 +34,25 @@
     <section class="movie-list">
         <h2>CÓ THỂ BẠN MUỐN XEM</h2>
         <div class="movie-grid">
-            <a href="/movie/1" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên Phim</div>
-            </a>
-            <a href="/movie/2" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên Phim</div>
-            </a>
-            <a href="/movie/3" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên Phim</div>
-            </a>
-            <a href="/movie/4" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên Phim</div>
-            </a>
-            <a href="/movie/5" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên Phim</div>
-            </a>
-            <a href="/movie/6" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên Phim</div>
-            </a>
-            <!-- Các movie-card khác tương tự, chỉ thay đổi href và tên phim -->
+            {% if related_movies %}
+                {% for movie in related_movies %}
+                <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" class="movie-card">
+                    <div class="placeholder-image" {% if movie.poster_path %}style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title">{{ movie.title }}</div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <!-- Fallback movie recommendations -->
+                {% for i in range(1, 7) %}
+                <a href="{{ url_for('movies.movie_details', movie_id=i) }}" class="movie-card">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title">Tên Phim</div>
+                </a>
+                {% endfor %}
+            {% endif %}
         </div>
     </section>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    // JavaScript có thể được thêm nếu cần tương tác
-</script>
 {% endblock %}

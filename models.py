@@ -33,12 +33,35 @@ class Movie:
 
 # Sample movie data
 sample_movies = [
-    Movie(1, "The Avengers", "/static/images/placeholder.png", "Earth's mightiest heroes must come together to save the world.", "Action, Adventure"),
-    Movie(2, "Inception", "/static/images/placeholder.png", "A thief who steals corporate secrets through dream-sharing technology.", "Sci-Fi, Action"),
-    Movie(3, "The Dark Knight", "/static/images/placeholder.png", "Batman fights against the Joker's anarchy in Gotham City.", "Action, Crime"),
-    Movie(4, "Pulp Fiction", "/static/images/placeholder.png", "The lives of two mob hitmen, a boxer, and a pair of diner bandits intertwine.", "Crime, Drama"),
-    Movie(5, "Forrest Gump", "/static/images/placeholder.png", "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man.", "Drama, Romance"),
-    Movie(6, "The Matrix", "/static/images/placeholder.png", "A computer hacker learns about the true nature of reality and his role in the war against its controllers.", "Sci-Fi, Action"),
+    Movie(1, "The Avengers", "/static/images/placeholder.png", "Earth's mightiest heroes must come together to save the world.", "action, adventure"),
+    Movie(2, "Inception", "/static/images/placeholder.png", "A thief who steals corporate secrets through dream-sharing technology.", "sci-fi, action"),
+    Movie(3, "The Dark Knight", "/static/images/placeholder.png", "Batman fights against the Joker's anarchy in Gotham City.", "action, crime"),
+    Movie(4, "Pulp Fiction", "/static/images/placeholder.png", "The lives of two mob hitmen, a boxer, and a pair of diner bandits intertwine.", "crime, drama"),
+    Movie(5, "Forrest Gump", "/static/images/placeholder.png", "The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other historical events unfold through the perspective of an Alabama man.", "drama, romance"),
+    Movie(6, "The Matrix", "/static/images/placeholder.png", "A computer hacker learns about the true nature of reality and his role in the war against its controllers.", "sci-fi, action"),
+]
+
+# Genre data structure for API
+class Genre:
+    def __init__(self, id, name, slug):
+        self.id = id
+        self.name = name
+        self.slug = slug
+
+# Sample genres
+sample_genres = [
+    Genre(1, "phim hành động", "action"),
+    Genre(2, "phim tình cảm", "romance"),
+    Genre(3, "phim hài hước", "comedy"),
+    Genre(4, "phim cổ trang", "historical"),
+    Genre(5, "phim tâm lý", "psychological"),
+    Genre(6, "phim võ thuật", "martial-arts"),
+    Genre(7, "phim chiến tranh", "war"),
+    Genre(8, "phim kinh dị", "horror"),
+    Genre(9, "phim truyền hình", "tv-series"),
+    Genre(10, "phim anime", "anime"),
+    Genre(11, "phim chiếu rạp", "cinema"),
+    Genre(12, "phim viễn tưởng", "sci-fi"),
 ]
 
 def get_movie_by_id(movie_id):
@@ -57,3 +80,7 @@ def search_movies(query):
         if query in movie.title.lower() or query in movie.overview.lower() or query in movie.genres.lower():
             results.append(movie)
     return results
+
+def get_genres():
+    """Get all available genres"""
+    return sample_genres

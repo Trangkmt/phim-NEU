@@ -183,6 +183,39 @@
     color: #d08000;
 }
 
+/* Fix movie grid layout */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* Six columns */
+    grid-gap: 15px; /* Consistent small gap */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.movie-card {
+    text-decoration: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.placeholder-image {
+    width: 100%;
+    padding-top: 150%; /* Maintain aspect ratio */
+    background-color: #333;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0;
+}
+
 .movie-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -255,4 +288,26 @@
 
 .view-all-btn:hover {
     background-color: #b06b00;
+}
+
+/* Homepage Description Section */
+.site-description {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.description-content h2 {
+    color: #d08000;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.description-content p {
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 0;
 }

@@ -1,7 +1,6 @@
-<!-- play_film.html -->
 {% extends 'base.html' %}
 
-{% block title %}Trang Chủ{% endblock %}
+{% block title %}Kết quả tìm kiếm{% endblock %}
 
 {% block content %}
 <!-- Content -->
@@ -25,89 +24,41 @@
             <!-- Tạo danh sách phim từ kết quả tìm kiếm -->
             {% if results %}
                 {% for movie in results %}
-                <a href="/movie/{{ movie.id }}" class="movie-card">
-                    <div class="placeholder-image"{% if movie.poster_path %} style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
+                <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" class="movie-card">
+                    <div class="placeholder-image" {% if movie.poster_path %}style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
                     <div class="play-button"></div>
                     <div class="movie-title">{{ movie.title }}</div>
                 </a>
                 {% endfor %}
             {% else %}
-                <div class="no-results">Không tìm thấy kết quả phù hợp.</div>
+                <p class="no-results">Không tìm thấy kết quả phù hợp.</p>
             {% endif %}
         </div>
     </section>
-
 
     <!-- Movie List Section -->
     <section class="movie-list">
         <h2>CÓ THỂ BẠN MUỐN XEM</h2>
         <div class="movie-grid">
-            <!-- [Thay đổi: Thêm tiêu đề phim bên dưới mỗi movie-card] -->
-            <a href="/movie/1" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/2" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/3" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/4" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/5" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/6" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/7" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/8" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/9" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/10" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/11" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
-            <a href="/movie/12" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title-small">Tên phim</div>
-            </a>
+            {% if suggested_movies %}
+                {% for movie in suggested_movies %}
+                <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" class="movie-card">
+                    <div class="placeholder-image" {% if movie.poster_path %}style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">{{ movie.title }}</div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <!-- Fallback movie recommendations -->
+                {% for i in range(1, 5) %}
+                <a href="{{ url_for('movies.movie_details', movie_id=i) }}" class="movie-card">
+                    <div class="placeholder-image"></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title-small">Tên phim</div>
+                </a>
+                {% endfor %}
+            {% endif %}
         </div>
     </section>
 </div>
-{% endblock %}
-
-{% block scripts %}
-
 {% endblock %}

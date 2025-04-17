@@ -258,10 +258,12 @@ header {
 /* CONTENT */
 .content {
     flex: 1 0 auto; /* Chiếm không gian còn lại và không co lại */
+    width: 100%;
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
     color: #fff;
+    box-sizing: border-box;
 }
 
 .content h2 {
@@ -272,7 +274,39 @@ header {
     margin-bottom: 20px;
 }
 
+/* Genre button wrapper */
+.genre-section .genre-list a {
+    text-decoration: none;
+    display: inline-block;
+}
 
+/* No results message */
+.no-results {
+    grid-column: span 6;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    padding: 20px;
+}
+
+/* Fix movie grid layout globally */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 15px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.movie-card {
+    text-decoration: none;
+    color: white;
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
 
 /* FOOTER */
 .footer {

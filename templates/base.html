@@ -6,6 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHIM NEU - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        /* Fix for movie grid layout */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 15px;
+            width: 100%;
+        }
+        
+        .movie-card {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Ensure content fills the grid cell */
+        .placeholder-image {
+            width: 100%;
+            height: 0;
+            padding-top: 150%;
+            background-color: #333;
+            position: relative;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -15,9 +39,9 @@
                 <img src="/static/images/logo.png" alt="PHIM NEU Logo" class="logo-img"> 
             </div>
             <ul class="nav-links">
-                <li><a href="#phim-moi">PHIM MỚI</a></li>
-                <li><a href="#phim-viet">PHIM VIỆT</a></li>
-                <li><a href="#trailer">TRAILER</a></li>
+                <li><a href="/phim-moi">PHIM MỚI</a></li>
+                <li><a href="/phim-viet">PHIM VIỆT</a></li>
+                <li><a href="/trailer">TRAILER</a></li>
             </ul>
             <div class="search-container">
                 <form action="/search" method="GET">
@@ -49,14 +73,14 @@
     <div id="login-modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
-            <form id="login-form" method="POST" action="/login">
+            <form id="login-form" method="POST" action="/auth/login">
                 <h2>Tên đăng nhập</h2>
                 <input type="text" name="username" class="modal-input" placeholder="Tên đăng nhập" required>
                 <h2>Mật khẩu</h2>
                 <input type="password" name="password" class="modal-input" placeholder="Mật khẩu" required>
                 <button type="submit" class="modal-btn">Đăng nhập</button>
                 <p class="forgot-password">Bạn chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
-                <div id="login-error" class="error-message" style="display: none;"></div>
+                <div id="login-error" class="error-message" style="display: none; color: red; margin-top: 10px;"></div>
             </form>
         </div>
     </div>
@@ -65,7 +89,7 @@
     <div id="register-modal" class="modal">
         <div class="modal-content">
             <span class="close">×</span>
-            <form id="register-form" method="POST" action="/register">
+            <form id="register-form" method="POST" action="/auth/register">
                 <h2>Tên đăng nhập</h2>
                 <input type="text" name="username" class="modal-input" placeholder="Tên đăng nhập" required>
                 <h2>Mật khẩu</h2>
@@ -74,24 +98,7 @@
                 <input type="password" name="confirm-password" class="modal-input" placeholder="Nhập lại mật khẩu" required>
                 <button type="submit" class="modal-btn">Đăng ký</button>
                 <p class="forgot-password">Bạn đã có tài khoản? <a href="#" id="show-login">Đăng nhập ngay</a></p>
-                <div id="register-error" class="error-message" style="display: none;"></div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal Đăng ký -->
-    <div id="register-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <form id="register-form" method="POST" action="/register">
-                <h2>Tên đăng nhập</h2>
-                <input type="text" name="username" class="modal-input" placeholder="Tên đăng nhập" required>
-                <h2>Mật khẩu</h2>
-                <input type="password" name="password" class="modal-input" placeholder="Mật khẩu" required>
-                <h2>Nhập lại mật khẩu</h2>
-                <input type="password" name="confirm-password" class="modal-input" placeholder="Nhập lại mật khẩu" required>
-                <button type="submit" class="modal-btn">Đăng ký</button>
-                <p class="forgot-password">Bạn đã có tài khoản?</p>
+                <div id="register-error" class="error-message" style="display: none; color: red; margin-top: 10px;"></div>
             </form>
         </div>
     </div>
@@ -198,7 +205,7 @@
                 
                 try {
                     const formData = new FormData(loginForm);
-                    const response = await fetch('/login', {
+                    const response = await fetch('/auth/login', {
                         method: 'POST',
                         body: formData
                     });
@@ -207,11 +214,12 @@
                     if (data.success) {
                         loginModal.style.display = 'none';
                         updateUIAfterLogin(data.username);
+                        showToast("success", data.message || "Đăng nhập thành công!");
                     } else {
                         showError(loginError, data.message || "Đăng nhập thất bại!");
                     }
                 } catch (error) {
-                    showError(loginError, "Lỗi kết nối! Vui lòng thử lại.");
+                    showError(loginError, "Lỗi kết nối! Vui lòng thử lại sau.");
                     console.error('Login error:', error);
                 }
             });
@@ -223,7 +231,7 @@
                 
                 try {
                     const formData = new FormData(registerForm);
-                    const response = await fetch('/register', {
+                    const response = await fetch('/auth/register', {
                         method: 'POST',
                         body: formData
                     });
@@ -232,12 +240,12 @@
                     if (data.success) {
                         registerModal.style.display = 'none';
                         updateUIAfterLogin(data.username);
-                        showSuccessMessage("Đăng ký và đăng nhập thành công!");
+                        showToast("success", data.message || "Đăng ký và đăng nhập thành công!");
                     } else {
                         showError(registerError, data.message || "Đăng ký thất bại!");
                     }
                 } catch (error) {
-                    showError(registerError, "Lỗi kết nối! Vui lòng thử lại.");
+                    showError(registerError, "Lỗi kết nối! Vui lòng thử lại sau.");
                     console.error('Register error:', error);
                 }
             });
@@ -246,10 +254,10 @@
             logoutBtn?.addEventListener('click', async (e) => {
                 e.preventDefault();
                 try {
-                    await fetch('/logout');
+                    await fetch('/auth/logout');
                     authButtons.style.display = 'flex';
                     userInfo.style.display = 'none';
-                    showSuccessMessage("Đăng xuất thành công!");
+                    showToast("success", "Đăng xuất thành công!");
                 } catch (error) {
                     console.error('Logout error:', error);
                 }
@@ -265,7 +273,7 @@
         // Hàm kiểm tra trạng thái đăng nhập
         async function checkLoginStatus() {
             try {
-                const response = await fetch('/user-info');
+                const response = await fetch('/auth/user-info');
                 const data = await response.json();
                 
                 if (data.isLoggedIn) {
@@ -296,10 +304,66 @@
         }
 
         // Hàm hiển thị thông báo thành công
-        function showSuccessMessage(message) {
-            alert(message); // Có thể thay bằng toast notification đẹp hơn
+        function showToast(type, message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+            
+            // Add toast to body
+            document.body.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Hide and remove toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
         }
     </script>
+
+    <!-- Add toast notification styles -->
+    <style>
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            color: white;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 9999;
+            max-width: 300px;
+        }
+        
+        .toast.success {
+            background-color: #4CAF50;
+        }
+        
+        .toast.error {
+            background-color: #F44336;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .error-message {
+            background-color: rgba(255, 0, 0, 0.1);
+            border-left: 3px solid #F44336;
+            padding: 8px;
+            border-radius: 3px;
+        }
+    </style>
+
     <!-- JavaScript cho các trang con (nếu cần) -->
     {% block scripts %}
     {% endblock %}

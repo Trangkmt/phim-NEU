@@ -1,7 +1,7 @@
 <!-- play_film.html -->
 {% extends 'base.html' %}
 
-{% block title %}Trang Chủ{% endblock %}
+{% block title %}Thể Loại: {{ genre|title }}{% endblock %}
 
 {% block content %}
 <!-- Content -->
@@ -12,46 +12,23 @@
     <section class="featured-movie">
         <!-- Thêm đoạn text tìm kiếm -->
         <div class="film_genres">
-            <p>THỂ LOẠI</p>
+            <p>THỂ LOẠI: {% if genre %}{{ genre|upper }}{% else %}TẤT CẢ{% endif %}</p>
         </div>
+        
         <!-- Thêm danh sách phim bên dưới -->
         <div class="movie-grid">
-            <!-- Tạo 12 khung phim placeholder -->
-            <a href="#" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên phim</div>
-            </a>
-            <a href="#" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên phim</div>
-            </a>
-            <a href="#" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên phim</div>
-            </a>
-            <a href="#" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên phim</div>
-            </a>
-            <a href="#" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên phim</div>
-            </a>
-            <a href="#" class="movie-card">
-                <div class="placeholder-image"></div>
-                <div class="play-button"></div>
-                <div class="movie-title">Tên phim</div>
-            </a>
+            {% if genre_movies %}
+                {% for movie in genre_movies %}
+                <a href="{{ url_for('movies.movie_details', movie_id=movie.id) }}" class="movie-card">
+                    <div class="placeholder-image" {% if movie.poster_path %}style="background-image: url('{{ movie.poster_path }}'); background-size: cover;"{% endif %}></div>
+                    <div class="play-button"></div>
+                    <div class="movie-title">{{ movie.title }}</div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <p class="no-results">Không tìm thấy phim thuộc thể loại này.</p>
+            {% endif %}
         </div>
     </section>
 </div>
-{% endblock %}
-
-{% block scripts %}
-
 {% endblock %}

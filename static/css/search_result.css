@@ -32,10 +32,19 @@
 /* Grid cho danh sách phim bên dưới */
 .movie-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 cột như trong ảnh */
+    grid-template-columns: repeat(6, 1fr); /* Sửa từ 4 cột thành 6 cột */
     gap: 15px;
     margin-top: 20px;
     width: 100%;
+}
+
+/* Thêm style cho khi không có kết quả */
+.no-results {
+    grid-column: span 6;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    padding: 20px;
 }
 
 .movie-card {
