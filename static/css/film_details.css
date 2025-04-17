@@ -1,0 +1,212 @@
+/* Content Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content {
+    flex: 1 0 auto;
+    width: 1200px; /* Khung cố định 1200px */
+    margin: 20px auto; /* Canh giữa khung */
+    padding: 0 20px; /* Giữ padding nhỏ để tránh nội dung chạm viền */
+    color: #fff;
+}
+
+/* Placeholder Styles */
+.placeholder-image {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+/* Featured Movie Section */
+.featured-movie {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.featured-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của .content */
+}
+
+.featured-thumbnail {
+    flex: 0 0 300px; /* Kích thước cố định cho thumbnail */
+    height: 400px;
+}
+
+.featured-thumbnail .placeholder-image {
+    height: 100%;
+}
+
+.featured-details {
+    flex: 1;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px; /* Đảm bảo chiều cao khớp với thumbnail */
+}
+
+.movie-title {
+    color: #d08000;
+}
+
+.featured-details p {
+    margin-bottom: 10px;
+}
+
+.featured-buttons {
+    display: flex;
+    gap: 10px;
+    align-self: flex-end; /* Đặt nút bên phải cùng hàng với text */
+}
+
+.watch-now-btn, .add-to-list-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.watch-now-btn {
+    background-image: linear-gradient(to right, #903625, #A1812D);
+    color: #fff;
+}
+
+.add-to-list-btn {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #A1812D;
+}
+
+.watch-now-btn:hover, .add-to-list-btn:hover {
+    opacity: 0.8;
+}
+
+.separator {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(to right, #903625, #A1812D);
+    margin: 20px 0;
+}
+
+.movie-description {
+    flex-grow: 1;
+}
+
+.description {
+    color: #d08000;
+}
+
+.description-text {
+    color: #fff;
+    margin: 0;
+}
+
+/* Movie List Section */
+.movie-list {
+    margin-bottom: 40px;
+}
+
+.movie-list h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #d08000;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* Đặt cố định 6 cột */
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.movie-card {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Xếp các phần tử theo chiều dọc */
+    text-decoration: none;
+}
+
+.movie-card .placeholder-image {
+    height: 270px; /* Giữ chiều cao cố định cho ảnh */
+    width: 100%;
+    border-radius: 10px;
+    transition: opacity 0.3s ease;
+    background-color: #fff; /* Thêm nền trắng nếu cần */
+}
+
+.movie-card .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: url('/static/images/play_button.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.movie-card .movie-title {
+    padding: 10px 0 0 0; /* Khoảng cách phía trên */
+    font-size: 14px;
+    color: #d08000; /* Màu cam */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: transparent; /* Không có nền */
+}
+
+/* Hiệu ứng hover */
+.movie-card:hover .placeholder-image {
+    opacity: 0.5;
+}
+
+.movie-card:hover .play-button {
+    opacity: 1;
+}
+
+/* Loại bỏ responsive cho .content để giữ khung cố định */
+@media (max-width: 768px) {
+    /* Không thay đổi width của .content, giữ cố định 1200px */
+    .featured-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .featured-thumbnail {
+        width: 100%;
+        height: 300px;
+    }
+
+    .featured-details {
+        min-height: auto;
+    }
+
+    .featured-buttons {
+        align-self: stretch; /* Nút trải dài trên thiết bị nhỏ */
+    }
+
+    .movie-card {
+        height: 220px;
+    }
+
+    .movie-card .placeholder-image {
+        height: 150px;
+    }
+}

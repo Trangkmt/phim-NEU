@@ -1,0 +1,57 @@
+<!-- play_film.html -->
+{% extends 'base.html' %}
+
+{% block title %}Trang Chủ{% endblock %}
+
+{% block content %}
+<!-- Content -->
+<link rel="stylesheet" href="/static/css/film_genres.css">
+
+<div class="content">
+    <!-- Featured Movie Section -->
+    <section class="featured-movie">
+        <!-- Thêm đoạn text tìm kiếm -->
+        <div class="film_genres">
+            <p>THỂ LOẠI</p>
+        </div>
+        <!-- Thêm danh sách phim bên dưới -->
+        <div class="movie-grid">
+            <!-- Tạo 12 khung phim placeholder -->
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

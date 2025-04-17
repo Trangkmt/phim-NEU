@@ -1,0 +1,130 @@
+<!-- play_film.html -->
+{% extends 'base.html' %}
+
+{% block title %}Trang Chủ{% endblock %}
+
+{% block content %}
+<!-- Content -->
+<link rel="stylesheet" href="/static/css/search_result.css">
+<div class="content">
+    <!-- Featured Movie Section -->
+    <section class="featured-movie">
+        <!-- Thêm đoạn text tìm kiếm -->
+        <div class="search-result">
+            HIỆN THỊ KẾT QUẢ TÌM KIẾM CỦA: 
+            <span class="search-query">
+                <!-- Giả sử có biến input, nếu không có thì hiển thị "...." -->
+                <!-- Đây là ví dụ tĩnh, bạn có thể thay bằng logic động -->
+                ....
+            </span>
+        </div>
+        <!-- Thêm danh sách phim bên dưới -->
+        <div class="movie-grid">
+            <!-- Tạo 12 khung phim placeholder -->
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+            <a href="#" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title">Tên phim</div>
+            </a>
+        </div>
+    </section>
+
+
+    <!-- Movie List Section -->
+    <section class="movie-list">
+        <h2>CÓ THỂ BẠN MUỐN XEM</h2>
+        <div class="movie-grid">
+            <!-- [Thay đổi: Thêm tiêu đề phim bên dưới mỗi movie-card] -->
+            <a href="/movie/1" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/2" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/3" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/4" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/5" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/6" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/7" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/8" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/9" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/10" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/11" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+            <a href="/movie/12" class="movie-card">
+                <div class="placeholder-image"></div>
+                <div class="play-button"></div>
+                <div class="movie-title-small">Tên phim</div>
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

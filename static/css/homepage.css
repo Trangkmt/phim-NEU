@@ -1,0 +1,258 @@
+/* Content General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.content {
+    flex: 1 0 auto;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    color: #fff;
+}
+
+/* Movie Section (Phim Mới) */
+.movie-section {
+    margin-bottom: 40px;
+}
+
+.movie-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #d08000;
+}
+
+.movie-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.carousel {
+    display: flex;
+    gap: 15px;
+    overflow-x: hidden;
+    padding-bottom: 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    width: 100%;
+    height: 353px;
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+}
+
+/* [Thay đổi: Cập nhật .movie-item để hỗ trợ link và nút play] */
+.movie-item {
+    flex: 0 0 220px;
+    height: 330px;
+    /* background-color: #fff; */
+    border-radius: 10px;
+    position: relative; /* Để định vị nút play */
+    display: block; /* Đảm bảo thẻ <a> hiển thị như khối */
+    text-decoration: none; /* Xóa gạch chân của link */
+}
+
+.movie-item .placeholder-image { /* Thêm class này nếu chưa có */
+    /* background-color: #fff; */
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease; /* Hiệu ứng mờ khi hover */
+}
+
+.movie-title-small {
+    font-size: 14px;
+    color: #d08000;
+    text-align: center;
+    margin-top: 5px;
+    height: 40px; /* Cố định chiều cao tiêu đề */
+    line-height: 20px; /* Căn giữa theo chiều dọc */
+    width: 100%; /* [Thêm: Giới hạn chiều rộng theo khung phim] */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* [Thay đổi: Chỉ cho phép 1 dòng] */
+}
+
+/* [Thêm mới: Định nghĩa nút play] */
+.movie-item .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: url('/static/images/play_button.png') no-repeat center center; /* Thay bằng đường dẫn thực tế */
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.movie-item:hover .placeholder-image {
+    filter: brightness(70%);/* Mờ khung khi hover */
+}
+
+.movie-item:hover .play-button {
+    opacity: 1; /* Hiện nút play khi hover */
+}
+
+.carousel-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.prev-btn {
+    left: -40px;
+}
+
+.next-btn {
+    right: -40px;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .movie-item {
+        flex: 0 0 180px;
+        height: 270px;
+    }
+
+    .prev-btn {
+        left: -20px;
+    }
+
+    .next-btn {
+        right: -20px;
+    }
+}
+/* Genre Section (Thể Loại) */
+.genre-section {
+    margin-bottom: 40px;
+}
+
+.genre-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #d08000;
+}
+
+.genre-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.genre-btn {
+    background-color: #4a2c25; /* Màu nâu giống trong hình */
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.genre-btn:hover {
+    background-color: #d08000; /* Màu hover giống logo */
+}
+
+/* Movie Collection (Kho Phim) */
+.movie-collection {
+    margin-bottom: 40px;
+}
+
+.movie-collection h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #d08000;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.movie-card {
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    height: auto;
+}
+
+.movie-card .placeholder-image {
+    background-color: #fff;
+    border-radius: 10px; /* Giữ bo góc đầy đủ cho ảnh */
+    width: 100%;
+    height: 270px;
+    transition: opacity 0.3s ease;
+    flex-shrink: 0;
+}
+
+.movie-card .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: url('/static/images/play_button.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.movie-card .movie-title {
+    padding: 10px 0 0 0; /* Chỉ giữ padding trên, bỏ padding các phía khác */
+    font-size: 14px;
+    color: #d08000; /* Đổi màu thành cam */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: transparent; /* Xóa nền trắng để tên phim nằm ngoài khung */
+}
+
+.movie-card:hover .placeholder-image {
+    filter: brightness(70%);
+}
+
+.movie-card:hover .play-button {
+    opacity: 1;
+}
+
+.view-all-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #d08000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.view-all-btn:hover {
+    background-color: #b06b00;
+}
