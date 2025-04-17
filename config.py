@@ -8,12 +8,15 @@ class Config:
     DEFAULT_CONFIG: Dict[str, Any] = {
         'SECRET_KEY': os.urandom(24).hex(),
         'SESSION_LIFETIME_DAYS': 1,
+        'DB_TYPE': 'mssql',  # 'mssql' or 'mysql'
         'DB_DRIVER': '{ODBC Driver 17 for SQL Server}',
-        'DB_SERVER': r'localhost\KMT',
+        'DB_SERVER': 'localhost',
         'DB_NAME': 'QLTAIKHOAN',
         'DB_TRUSTED': 'yes',
         'DB_USER': '',
         'DB_PASS': '',
+        'DB_HOST': 'localhost',  # For MySQL
+        'DB_PORT': '3306',       # For MySQL
         'LOG_FILE': 'app.log',
         'LOG_MAX_BYTES': 10000,
         'LOG_BACKUP_COUNT': 3,
@@ -30,12 +33,21 @@ class Config:
         )
 
         # Database configuration
+        db_type = os.environ.get('DB_TYPE', self.DEFAULT_CONFIG['DB_TYPE']).lower()
+        
         self.db_config: Dict[str, Any] = {
+            'type': db_type,
+            # MSSQL specific
             'driver': os.environ.get('DB_DRIVER', self.DEFAULT_CONFIG['DB_DRIVER']),
             'server': os.environ.get('DB_SERVER', self.DEFAULT_CONFIG['DB_SERVER']),
             'database': os.environ.get('DB_NAME', self.DEFAULT_CONFIG['DB_NAME']),
-            'trusted': os.environ.get('DB_TRUSTED', self.DEFAULT_CONFIG['DB_TRUSTED']).lower() == 'yes',
+            'trusted': os.environ.get('DB_TRUSTED', self.DEFAULT_CONFIG['DB_TRUSTED']),
             'username': os.environ.get('DB_USER', self.DEFAULT_CONFIG['DB_USER']),
+            'password': os.environ.get('DB_PASS', self.DEFAULT_CONFIG['DB_PASS']),
+            # MySQL specific
+            'host': os.environ.get('DB_HOST', self.DEFAULT_CONFIG['DB_HOST']),
+            'port': os.environ.get('DB_PORT', self.DEFAULT_CONFIG['DB_PORT']),
+            'user': os.environ.get('DB_USER', self.DEFAULT_CONFIG['DB_USER']),
             'password': os.environ.get('DB_PASS', self.DEFAULT_CONFIG['DB_PASS'])
         }
 
@@ -52,18 +64,24 @@ class Config:
 
     @property
     def db_connection_string(self) -> str:
-        """Generate SQL Server connection string."""
-        if self.db_config['trusted']:
+        """Generate database connection string based on type."""
+        if self.db_config['type'] == 'mysql':
             return (
-                f"DRIVER={self.db_config['driver']};"
-                f"SERVER={self.db_config['server']};"
-                f"DATABASE={self.db_config['database']};"
-                "Trusted_Connection=yes;"
+                f"mysql+pymysql://{self.db_config['user']}:{self.db_config['password']}@"
+                f"{self.db_config['host']}:{self.db_config['port']}/{self.db_config['database']}"
             )
-        return (
-            f"DRIVER={self.db_config['driver']};"
-            f"SERVER={self.db_config['server']};"
-            f"DATABASE={self.db_config['database']};"
-            f"UID={self.db_config['username']};"
-            f"PWD={self.db_config['password']};"
-        )
+        else:  # Default to MSSQL
+            if self.db_config['trusted'].lower() == 'yes':
+                return (
+                    f"mssql+pyodbc:///"
+                    f"?driver={self.db_config['driver']}"
+                    f"&server={self.db_config['server']}"
+                    f"&database={self.db_config['database']}"
+                    "&trusted_connection=yes"
+                )
+            return (
+                f"mssql+pyodbc://{self.db_config['username']}:{self.db_config['password']}@"
+                f"?driver={self.db_config['driver']}"
+                f"&server={self.db_config['server']}"
+                f"&database={self.db_config['database']}"
+            )
